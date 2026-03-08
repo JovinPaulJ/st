@@ -1,0 +1,345 @@
+prg 1 - Write a script to open google.com and verify that title is Google and verify that it is redirected to google.co.in
+
+package seleniumsem;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class pr1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+       ChromeDriver driver= new ChromeDriver();
+       driver.get("http://www.google.com");
+       String title = driver.getTitle();
+       if(title.equals("Google")) {
+    	   System.out.println("Pass Title is Google");
+    	   
+       }else {
+    	   System.out.println("Fail : title is Not Google");
+       }
+     String url = driver.getCurrentUrl();
+     if(url.contains("google.co.in")) {
+    	 System.out.println("Pass: the url contains Google.co.in");
+     }
+     else {
+    	 System.out.println("Fail Url doesnt contain Google.co.in");
+     }
+	}
+
+}
+
+prg 2- Write a script to open google.co.in using Chrome browser (Chrome Driver)
+package seleniumsem;
+import org.openqa.selenium.chrome.ChromeDriver;
+public class pr2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ChromeDriver driver = new ChromeDriver();
+		driver.get("http://www.google.com");
+        driver.manage().window().maximize();
+        System.out.println("The Chrome has been Opened using Selenium Successfully");
+	}
+
+}
+
+prg 3 -  Write a script to open google.co.in	 using Firefox browser (Firefox Driver)
+package seleniumsem;
+import org.openqa.selenium.WebDriver; 
+import org.openqa.selenium.firefox.FirefoxDriver; 
+public class pr3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//System.setProperty("webdriver.gecko.driver","C:\\Users\\Admin\\Downloads\\geckodriver-v0.36.0-win64\\geckodriver.exe");
+
+
+		   WebDriver driver = new FirefoxDriver(); 
+		 driver.get("https://www.google.co.in");  
+		}
+		
+}
+
+	
+prg 4 - Write a script to create browser instance based on browser name
+
+package seleniumsem;
+
+import java.util.Scanner;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+public class pr4
+{
+public static void main(String[] args)
+{
+Scanner sc=new Scanner(System.in);
+System.out.println("Enter browser?GC/FF");
+String browser=sc.next();
+WebDriver driver;
+
+if(browser.equalsIgnoreCase("GC"))
+{
+driver=new ChromeDriver();
+}
+
+else
+{
+driver=new FirefoxDriver();
+}
+
+driver.get("https://www.google.co.in");
+System.out.println(driver.getTitle());
+System.out.println(driver.getCurrentUrl());
+driver.close();
+}
+}
+
+
+prg 5 - Write a script to search for specified option in the list box
+
+package seleniumsem;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.By;
+
+public class pr5 {
+public static void main(String[] args) {
+    String baseURL = "https://demo.guru99.com/test/newtours/register.php";
+    WebDriver driver = new ChromeDriver();
+       driver.get(baseURL);
+
+       Select drpCountry = new Select(driver.findElement(By.name("country")));
+       drpCountry.selectByVisibleText("ANTARCTICA");
+
+       //Selecting Items in a Multiple SELECT elements
+       driver.get("http://jsbin.com/osebed/2");
+       Select fruits = new Select(driver.findElement(By.id("fruits")));
+       fruits.selectByVisibleText("Banana");
+       fruits.selectByIndex(1);
+}
+}
+
+prg 6 - Write a script to print the content of list in sorted order.
+
+
+package seleniumsem;
+import java.util.ArrayList;
+import java.util.Collections;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+public class pr6 {
+	public static void main(String[] args) {
+
+//		System.setProperty("webdriver.chrome.driver", "C://Drivers/chromedriver_win32/chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+
+		driver.get("https://testautomationpractice.blogspot.com");
+
+		driver.manage().window().maximize();
+
+		WebElement element = driver.findElement(By.id("animals"));
+
+		Select se = new Select(element);
+
+		ArrayList originalList = new ArrayList();
+		ArrayList tempList = new ArrayList();
+
+		for (WebElement e : se.getOptions()) {
+		originalList.add(e.getText());
+		tempList.add(e.getText());
+		}
+
+
+		System.out.println("this is originalList before Sorting" + originalList);
+		System.out.println("this is tempList before Sorting" + tempList);
+
+		Collections.sort(tempList);
+
+		System.out.println("this is originalList after Sorting" + originalList);
+		System.out.println("this is tempList after Sorting" + tempList);
+
+		if (originalList == tempList) {
+		System.out.println("Dropdown sorted");
+		} else {
+		System.out.println("Dropdown Not sorted");
+
+		}
+		driver.close();
+		}
+
+		
+}
+
+
+prg 7 - Write a script to print all the options. For duplicates add entry only once. Use HashSet.
+
+package seleniumsem;
+
+import java.util.HashSet;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class pr7 {
+
+public static void main(String[] args) {
+
+WebDriver driver = new ChromeDriver();
+driver.manage().window().maximize();
+
+driver.get("https://testautomationpractice.blogspot.com");
+
+Select select = new Select(driver.findElement(By.id("country")));
+
+List<WebElement> options = select.getOptions();
+HashSet<String> countries = new HashSet<>();
+
+for (WebElement option : options) {
+countries.add(option.getText().trim());
+}
+
+countries.forEach(System.out::println);
+
+driver.quit();
+}
+}
+
+
+prg 8 - Write a script to close all the browsers without using quit() method.
+
+package seleniumsem;
+
+import java.util.Set;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class pr8
+
+{
+
+public static void main(String[] args)
+
+{
+
+WebDriver driver=new ChromeDriver();
+
+driver.get("http://www.timesofindia.indiatimes.com");
+Set<String> allWH=driver.getWindowHandles();
+int count=allWH.size();
+System.out.println(count);
+for(String wh:allWH)
+{
+driver.switchTo().window(wh);
+String title=driver.getTitle();
+System.out.println(title);
+driver.close();
+}
+}
+}
+
+
+prg 9 -  Write generic method in selenium to handle all locators and return web element for any locator.
+
+package seleniumsem;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class pr9 {
+
+    static WebDriver driver;
+
+    // Generic method to return WebElement
+    public static WebElement getElement(String locatorType, String locatorValue) {
+
+        switch (locatorType.toLowerCase()) {
+            case "id":
+                return driver.findElement(By.id(locatorValue));
+
+            case "name":
+                return driver.findElement(By.name(locatorValue));
+
+            case "xpath":
+                return driver.findElement(By.xpath(locatorValue));
+
+            case "css":
+                return driver.findElement(By.cssSelector(locatorValue));
+
+            case "classname":
+                return driver.findElement(By.className(locatorValue));
+
+            case "linktext":
+                return driver.findElement(By.linkText(locatorValue));
+
+            default:
+                throw new IllegalArgumentException("Invalid locator type: " + locatorType);
+        }
+    }
+
+    public static void main(String[] args) {
+
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        // Working URL
+        driver.get("https://www.selenium.dev");
+
+        // Using generic method
+        WebElement header = getElement("xpath", "//h1");
+        System.out.println(header.getText());
+
+        driver.quit();
+    }
+}
+
+prg 10 - Write generic method in selenium to handle all locators containing dynamic wait and return web element for any locator.
+
+package seleniumsem;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+public class pr10 {
+
+    static WebDriver driver;
+
+    // Generic method to wait and return WebElement
+    public static WebElement getElement(By locator, int timeout) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    public static void main(String[] args) {
+
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://www.google.com");
+
+        // Using generic method for different locators
+        WebElement searchBox = getElement(By.name("q"), 10);
+        searchBox.sendKeys("Selenium WebDriver");
+
+        WebElement searchButton = getElement(By.name("btnK"), 10);
+        searchButton.click();
+        
+
+        driver.quit();
+    }
+}
